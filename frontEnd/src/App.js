@@ -13,7 +13,7 @@ import Login from "./component/Login";
 import SignUp from "./component/SignUp";
 
 function App() {
-  const [isLogged, setIsLogged]= useState(`${localStorage.getItem("token")?true: false}`)
+  const [isLogged, setIsLogged]= useState(localStorage.getItem("token")? true: false)
   return (
    <>
    <AudioStates>

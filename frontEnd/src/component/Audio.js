@@ -13,8 +13,10 @@ const Audio = () => {
       }
     },[])
   return (
-    <div className='row'>
-    <h2>your Audio</h2>
+    <div className='p-4'>
+    <button className='buttonAudio'>Hey {localStorage.getItem("name")}</button>
+    <hr/>
+    <p style={{fontSize:"28px"}}>Here are your converted audios</p>
     {audios.map((ele)=>{
         return <AudioItem key={ele._id} ele={ele} />
         })}

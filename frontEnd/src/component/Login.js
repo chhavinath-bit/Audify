@@ -29,7 +29,8 @@ const Login = (props) => {
     setCredentials({...credentials,[e.target.name] : e.target.value});
 }
   return (
-    <div>
+    <div className='container-fluid Page d-flex justify-content-center'>
+    <div className='card shadow' style={{height:"35vh",marginTop:"200px", width:"40vw",paddingTop:"40px", padding:"30px", borderRadius:"10px"}}>
       <form onSubmit={submitCredential}>
   <div className="form-group">
     <label htmlFor="email">Email address</label>
@@ -40,11 +41,12 @@ const Login = (props) => {
     <label htmlFor="password">Password</label>
     <input type="password" className="form-control" name='password' value={credentials.password} id="password" onChange={onChange} placeholder="Password" />
   </div>
-  <button type="submit" className="btn btn-primary" >Submit</button>
+  <button type="submit" className="my-4 btn btn-dark" >Submit</button>
 </form>
 <Link id="toHome" to="/">
 
 </Link>
+    </div>
     </div>
   )
 }

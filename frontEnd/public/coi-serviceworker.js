@@ -31,7 +31,7 @@ if (typeof window === 'undefined') {
             ? new Request(r, {
                 credentials: "omit",
             })
-            : r;
+            : r ;
         event.respondWith(
             fetch(request)
                 .then((response) => {

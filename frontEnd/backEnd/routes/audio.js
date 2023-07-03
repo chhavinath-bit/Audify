@@ -25,12 +25,15 @@ router.post(
   async (req, res) => {
     try {
     const {url, description, tag}= req.body;
+    
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
       return res.status(400).json({ errors: errors.array() });
     }
+    let date = new Date();
+    let createdOn= date.toGMTString();
     const audio= new Audio({
-      url, description, tag, user: req.user.id
+      createdOn, url, description, tag, user: req.user.id
     })
     const saveAudio = await audio.save()
     res.json(saveAudio);

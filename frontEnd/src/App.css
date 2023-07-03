@@ -13,6 +13,20 @@
   }
 }
 
+.Page{
+  background-image: url("./bg.gif");
+  background-size: cover;
+  height: 93vh;
+}
+.buttonAudio{
+  background-color: black;
+  color:white;
+  width: 10vw;
+  margin-top: 20px;
+  font-size: 25px;
+  border-radius: 10px;
+  margin-bottom: 10px;
+}
 .App-header {
   background-color: #282c34;
   min-height: 100vh;

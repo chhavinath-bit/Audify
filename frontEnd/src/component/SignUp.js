@@ -3,9 +3,11 @@ import { Link } from 'react-router-dom';
 const SignUp = (props) => {
     const [credentials, setCredentials]= useState({name:"",email:"", password:"", confirm_password:""})
     const submitCredential=async (event)=>{
+      document.getElementById("errmsg").style.color="black";
         document.getElementById("errmsg").textContent="";
         event.preventDefault();
         if(credentials.password!==credentials.confirm_password){
+          document.getElementById("errmsg").style.color="red";
             document.getElementById("errmsg").textContent="confirm password must be same as password";
             return;
         }
@@ -45,14 +47,15 @@ const SignUp = (props) => {
        
     }
   return (
-    <div>
+    <div className='container-fluid Page d-flex justify-content-center'>
+    <div className='card shadow' style={{ marginTop:"160px", width:"40vw",height:"52vh", paddingTop:"30px", padding:"30px", borderRadius:"10px"}}>
       <form onSubmit={submitCredential}>
   <div className="form-group">
   <label htmlFor="fname">Name</label>
     <input type="text" className="form-control" name='name' value={credentials.name} id="fname" onChange={onChange} />
     <label htmlFor="email">Email address</label>
     <input type="email" className="form-control" name='email' id="email" value={credentials.email} aria-describedby="emailHelp" onChange={onChange} placeholder="Enter email" />
-    <small id="emailHelp" className="form-text text-muted">We'll never share your email with anyone else.</small>
+    
   </div>
   <div className="form-group">
     <label htmlFor="password">Password</label>
@@ -63,11 +66,12 @@ const SignUp = (props) => {
     <input type="password" className="form-control" name='confirm_password' value={credentials.confirm_password} id="cpassword" onChange={onChange} placeholder="Password" />
     <p id="errmsg"></p>
   </div>
-  <button type="submit" className="btn btn-primary" >Submit</button>
+  <button type="submit" className="my-3 btn btn-dark" >Submit</button>
 </form>
 <Link id="toHome" to="/">
 
 </Link>
+    </div>
     </div>
   )
 }

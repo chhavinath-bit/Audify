@@ -5,10 +5,12 @@ import AddAudio from './AddAudio'
 const Home = () => {
     
   return (
-    <div className='container my-3'>
-    
-   <AddAudio/>
+    <div className='container-fluid Page' style={{color:"white", }}>
+    <div className='row'>
+    <AddAudio/>
    <Audio/>
+    </div>
+   
     </div>
   )
 }
