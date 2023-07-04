@@ -7,13 +7,13 @@ const Login = (props) => {
     event.preventDefault();
     fetch("");
     const response = await fetch(`http://localhost:5000/api/auth/login`, {
-        method: "POST", // *GET, POST, PUT, DELETE, etc.
+        method: "POST",
     
         headers: {
           "Content-Type": "application/json",
         },
        
-        body: JSON.stringify(credentials), // body data type must match "Content-Type" header
+        body: JSON.stringify(credentials),
       });
       const json= await response.json();
       console.log(json);

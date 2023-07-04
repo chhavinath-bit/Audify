@@ -6,6 +6,14 @@ const AddAudio = () => {
 
     const [audio, setAudio]= useState({ description:" ", tag:"default"})
     const addAudioByinput=(event)=>{
+      if(video===undefined){
+        alert("please select a file")
+          return 
+      }
+      if(audio.description.length<5){
+        alert("please provide a valid description");
+        return 
+      }
      event.preventDefault();
      addAudio(video, audio.description, audio.tag);
      setAudio({ description:" ", tag:"default"})

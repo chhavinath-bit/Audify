@@ -12,7 +12,7 @@ const AudioStates = (props) => {
   const [audios, setAudios] = useState(audioIntially);
   const [ready, setReady] = useState(false);
   const [video, setVideo] = useState();
-  const [gif, setGif] = useState();
+
   const load = async () => {
     await ffmpeg.load();
     setReady(true);
@@ -82,10 +82,10 @@ const AudioStates = (props) => {
       { type: "audio/mpeg" }
     );
 
-    console.log(file);
-
+    console.log("file: ",file);
+   console.log("time: ", d.getSeconds());
     const storage = getStorage();
-    const storageRef = ref(storage, "child");
+    const storageRef = ref(storage, "audio");
 
     // 'file' comes from the Blob or File API
     const temp = await uploadBytes(storageRef, file).then((snapshot) => {
