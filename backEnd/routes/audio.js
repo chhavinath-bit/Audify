@@ -75,14 +75,16 @@ router.delete("/deleteaudio/:id", fetchuser, async (req, res) => {
     try {
 
          let audio= await Audio.findById(req.params.id);
+         
          if(!audio){
             return res.status(404).send("Not Found");
          }
+         let des= audio.description;
          if(audio.user.toString()!== req.user.id){
             return res.status(401).send("unauthorized");
          }
           audio = await Audio.findByIdAndDelete(req.params.id)
-          res.json({"sucess":"audio deleted"}) 
+          res.json({"sucess":"audio deleted","description":des}) 
 
     }  catch(err){
         console.error(err.message);

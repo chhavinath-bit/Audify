@@ -15,7 +15,7 @@ import SignUp from "./component/SignUp";
 function App() {
   const [isLogged, setIsLogged]= useState(localStorage.getItem("token")? true: false)
   return (
-   <>
+   <div className="main-bg">
    <AudioStates>
    <Router>
    <Navbar isLogged={isLogged} setIsLogged={setIsLogged} />
@@ -36,7 +36,7 @@ function App() {
   
 
 </AudioStates>
-</> 
+</div> 
 
   );
 }

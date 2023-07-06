@@ -57,7 +57,7 @@ const AudioItem = (props) => {
         </span>
         <a
           href={ele.url}
-          
+          style={{color:"black"}}
           target="_blank"
           rel="noreferrer"
         >

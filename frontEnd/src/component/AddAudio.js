@@ -4,7 +4,7 @@ const AddAudio = () => {
     const context= useContext(audioContext)
     const {addAudio, setVideo, video}= context;
 
-    const [audio, setAudio]= useState({ description:" ", tag:"default"})
+    const [audio, setAudio]= useState({ description:"", tag:"default"})
     const addAudioByinput=(event)=>{
       if(video===undefined){
         alert("please select a file")
@@ -17,20 +17,21 @@ const AddAudio = () => {
      event.preventDefault();
      addAudio(video, audio.description, audio.tag);
      setAudio({ description:" ", tag:"default"})
+     document.getElementById("video").value="";
     }
    const onChange=(e)=>{
    
         setAudio({...audio,[e.target.name] : e.target.value})
    }
    const onChangeFile=(e)=>{
-    setVideo(e.target.files?.item(0))
+    setVideo(e.target.files?.item(0));
    }
   return (
     <div className='p-4' >
     <form>
     <div className="form-group">
       {/* <label htmlFor="title">Email address</label> */}
-      <input onChange={onChangeFile} type="file" className="form-control my-3" id="title" name="title" aria-describedby="emailHelp" placeholder="Enter email" />
+      <input onChange={onChangeFile} type="file" className="form-control my-3" id="video" name="video" aria-describedby="emailHelp" placeholder="Enter email" />
       
     </div>
     <div className="form-group">

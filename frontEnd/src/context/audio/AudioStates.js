@@ -83,10 +83,12 @@ const AudioStates = (props) => {
     );
 
     console.log("file: ",file);
-   console.log("time: ", d.getSeconds());
+    console.log("time: ", d.getSeconds());
     const storage = getStorage();
-    const storageRef = ref(storage, "audio");
-
+ 
+  
+    const storageRef = ref(storage, `${description}`.concat(`${d.getTime()}`));
+   
     // 'file' comes from the Blob or File API
     const temp = await uploadBytes(storageRef, file).then((snapshot) => {
       console.log("Uploaded a blob or file!");

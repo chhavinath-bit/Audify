@@ -14,7 +14,7 @@ const Audio = () => {
     },[])
   return (
     <div className='p-4'>
-    <button className='buttonAudio'>Hey {localStorage.getItem("name")}</button>
+    <span className='buttonAudio'>Hey {localStorage.getItem("name")}</span>
     <hr/>
     <p style={{fontSize:"28px"}}>Here are your converted audios</p>
     {audios.map((ele)=>{

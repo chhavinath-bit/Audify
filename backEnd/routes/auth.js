@@ -35,7 +35,7 @@ router.post(
       }
     }
       var token = jwt.sign(data, JWT_SECRET);
-      console.log(token);
+  
       success=true;
     res.json({name , success, token});
     
@@ -81,7 +81,7 @@ router.post(
     }
     const success= true;
       var token = jwt.sign(data, JWT_SECRET);
-      console.log(token);
+     
     res.json({name ,success, token});
 
     }catch(error){

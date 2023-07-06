@@ -19,7 +19,7 @@ const Navbar = (props) => {
       <li className="nav-item active">
         <Link className="nav-link" to="/">Home <span className="sr-only">(current)</span></Link>
       </li>
-      <li className="nav-item active" style={{ paddingLeft:"20px ",width:"85vw"}}>
+      <li className="nav-item active" style={{ paddingLeft:"20px ",width:"90vw"}}>
       {console.log("props.isLogged: ", props.isLogged)}
       {(props.isLogged===true) &&  
         <div className="d-flex justify-content-end">
@@ -28,15 +28,7 @@ const Navbar = (props) => {
             Log out
           </button>{" "}
         </div> }
-        { !(props.isLogged===true) &&
-        <div className="d-flex justify-content-end">
-          <Link className="btn btn-primary mx-1" to="/Signup">
-            sign Up
-          </Link>
-          <Link className="btn btn-primary mx-1" to="/Login">
-        login
-      </Link>
-        </div>}
+  
       </li>
     </ul>
   </div>
