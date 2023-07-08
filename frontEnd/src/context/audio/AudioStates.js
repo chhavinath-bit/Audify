@@ -54,6 +54,51 @@ const AudioStates = (props) => {
     const Json = await response.json();
     setAudios(Json);
   };
+  const addAudioByUrl= async (videoUrl,description)=>{
+    console.log(videoUrl);
+    let status;
+    let url;
+    const Yurl = `https://youtube-mp36.p.rapidapi.com/dl?id=${videoUrl}`;
+    const options = {
+      method: 'GET',
+      headers: {
+        'X-RapidAPI-Key': 'd725180af2msh18ae9c7e95ddfb3p16aeb9jsn57cd19dd8cd1',
+        'X-RapidAPI-Host': 'youtube-mp36.p.rapidapi.com'
+      }
+    };
+    
+    try {
+      const response = await fetch(Yurl, options);
+      const result = await response.json();
+      console.log(result);
+      
+      console.log(result.link);
+      url= result.link;
+      status = result.status
+    } catch (error) {
+      console.error(error);
+    }
+   if(status==="ok"){
+    const response = await fetch(`${host}/api/audio/addaudio`, {
+      method: "POST", // *GET, POST, PUT, DELETE, etc.
+
+      headers: {
+        "Content-Type": "application/json",
+
+        "auth-token": localStorage.getItem("token"),
+      },
+
+      body: JSON.stringify({ url, description }),
+    });
+    const Json = await response.json();
+    console.log("Json: ",Json);
+    console.log(Json.url);
+    setAudios(audios.concat(Json));
+  }
+  else{
+    console.log("try again");
+  }
+  }
   const addAudio = async (video, description, tag) => {
     ffmpeg.FS("writeFile", "video1.mp4", await fetchFile(video));
     await ffmpeg.run(
@@ -150,7 +195,7 @@ const AudioStates = (props) => {
 
   return (
     <audioContext.Provider
-      value={{ audios, setVideo, video, addAudio, fetchAllAudio, deleteAudio }}
+      value={{ audios, setVideo, video, addAudio, addAudioByUrl,  fetchAllAudio, deleteAudio }}
     >
       {props.children}
     </audioContext.Provider>
