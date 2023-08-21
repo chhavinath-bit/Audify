@@ -1,13 +1,11 @@
 {
   "name": "todooncloud-backend",
   "version": "1.0.0",
- 
   "description": "todooncloud-Your To-Do on the Cloud",
   "main": "index.js",
   "scripts": {
     "start": "node -r esm index.js",
     "test": "echo \"Error: no test specified\" && exit 1"
-    
   },
   "author": "",
   "license": "ISC",
@@ -19,9 +17,7 @@
     "firebase": "^9.23.0",
     "jsonwebtoken": "^9.0.0",
     "mongodb": "^5.6.0",
-    "mongoose": "^7.3.0"
-  },
-  "devDependencies": {
-    "nodemon": "^2.0.22"
+    "mongoose": "^7.3.0",
+    "nodemon": "^3.0.1"
   }
 }

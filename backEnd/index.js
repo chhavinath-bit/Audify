@@ -11,9 +11,9 @@ app.use(express.json())
 const port = 5000;
 
 //
-app.use(express.json())
+// app.use(express.json())
 app.use("/api/auth", require('./routes/auth.js'))
 app.use("/api/audio", require('./routes/audio.js'))
 app.listen(port, () => {
-  console.log(`Example app listening on port ${port}`);
+  console.log(`Server of CampusAudify listening on port ${port}`);
 })

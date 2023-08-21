@@ -12,7 +12,11 @@
     animation: App-logo-spin infinite 20s linear;
   }
 }
-
+.btn-custom{
+  border: 1px solid white;
+  border-radius: 10px;
+  font-size: 19px;
+}
 /* .Page{
   height: 65vh;
   padding-top: 45px;
@@ -24,12 +28,13 @@
   width: 100vw;
   padding-top: 15vh;
     padding-left: 27vw;
-height: 92vh;
+/* height: 92vh; */
+padding-bottom: 4vh;
 }
 .imgSingup{
   
   width: 25vw;
-  height: 65vh;
+  height: 100%;
   border-top-left-radius: 10px;
   border-bottom-left-radius: 10px;
 
@@ -37,7 +42,7 @@ height: 92vh;
 .imgLogin{
   
   width: 25vw;
-  height: 56vh;
+  height: 100%;
   border-top-right-radius: 10px;
   border-bottom-right-radius: 10px;
 
@@ -52,11 +57,11 @@ height: 92vh;
 } */
 .pageStyle{
   width: 25vw;
-  height: 65vh;
+  /* height: 65vh; */
 }
 .loginStyle{
   width: 25vw;
-  height: 56vh;
+  /* height: 56vh; */
 }
 .main-bg{
   width: 100vw;
@@ -69,7 +74,7 @@ height: 92vh;
   border-radius: 10px;
   padding: 0px;
   width: 51vw;
-  height: 65vh;
+  /* height: 65vh; */
   background-color: white;
 }
 .loginCard{
@@ -77,27 +82,31 @@ height: 92vh;
   border-radius: 10px;
   padding: 0px;
   width: 50vw;
-  height: 56vh;
+  /* height: 56vh; */
   background-color: white;
 }
 .singUpCredential{
-  padding-top: 30px;
-  padding-left: 30px;
+  /* padding-top: 30px;
+  padding-left: 30px; */
+  padding: 15px;
+  width: 100%;
 }
 .loginCredential{
-  padding-top: 30px;
+  /* padding-top: 30px;
   padding-left: 30px;
   width: 25vw;
-  padding-right: 8px;
+  padding-right: 8px; */
+  padding: 15px;
+  width: 100%;
 }
 .buttonAudio{
-  background-color: black;
+  /* background-color: black; */
   color:white;
-  margin-top: 20px;
-  font-size: 25px;
-  padding: 4px;
+  /* margin-top: 20px; */
+  font-size: 20px;
+  /* padding: 4px;
   border-radius: 10px;
-  margin-bottom: 10px;
+  margin-bottom: 10px; */
 }
 .App-header {
   background-color: #282c34;

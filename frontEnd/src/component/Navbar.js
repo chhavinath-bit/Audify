@@ -10,7 +10,7 @@ const Navbar = (props) => {
   return (
    <>
    <nav className="navbar navbar-expand-lg navbar-dark bg-dark">
-  <Link style={{paddingLeft:"10px"}} className="navbar-brand" to="/">Audify</Link>
+  <Link style={{paddingLeft:"10px"}} className="navbar-brand d-none d-lg-block" to="/">Audify</Link>
   <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
     <span className="navbar-toggler-icon"></span>
   </button>
@@ -19,19 +19,16 @@ const Navbar = (props) => {
       <li className="nav-item active">
         <Link className="nav-link" to="/">Home <span className="sr-only">(current)</span></Link>
       </li>
-      <li className="nav-item active" style={{ paddingLeft:"20px ",width:"90vw"}}>
-      {console.log("props.isLogged: ", props.isLogged)}
-      {(props.isLogged===true) &&  
-        <div className="d-flex justify-content-end">
-          <h5 style={{color:"white", marginTop:"6px", marginRight:"40px"}}>{localStorage.getItem("name")}</h5>{" "}
+    </ul>
+ 
+  </div>
+  {(props.isLogged===true) &&  
+        <div className="d-flex justify-content-end me-4">
+          <h5 className="mx-2" style={{color:"white", marginTop:"6px"}}>{localStorage.getItem("name")}</h5>{" "}
           <button onClick={logout} className="btn btn-primary">
             Log out
           </button>{" "}
         </div> }
-  
-      </li>
-    </ul>
-  </div>
 </nav>
     
       

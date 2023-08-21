@@ -22,12 +22,12 @@ const AudioStates = (props) => {
     load();
   }, []);
   const firebaseConfig = {
-   apiKey: process.env.REACT_APP_OUR_SECRET_API,
-  authDomain: "campus-audify.firebaseapp.com",
-  projectId: "campus-audify",
-  storageBucket: "campus-audify.appspot.com",
-  messagingSenderId: "802394273530",
-  appId: "1:802394273530:web:a7f9b0a787c3b7ea167b43"
+    apiKey: process.env.REACT_APP_OUR_SECRET_API,
+    authDomain: "campus-audify.firebaseapp.com",
+    projectId: "campus-audify",
+    storageBucket: "campus-audify.appspot.com",
+    messagingSenderId: "802394273530",
+    appId: "1:802394273530:web:a7f9b0a787c3b7ea167b43",
   };
 
   // Initialize Firebase
@@ -54,51 +54,92 @@ const AudioStates = (props) => {
     const Json = await response.json();
     setAudios(Json);
   };
-  const addAudioByUrl= async (videoUrl,description)=>{
+  const addAudioByUrl = async (videoUrl, description) => {
     console.log(videoUrl);
     let status;
-    let url;
+    let tempurl;
     const Yurl = `https://youtube-mp36.p.rapidapi.com/dl?id=${videoUrl}`;
     const options = {
-      method: 'GET',
+      method: "GET",
       headers: {
-        'X-RapidAPI-Key': 'd725180af2msh18ae9c7e95ddfb3p16aeb9jsn57cd19dd8cd1',
-        'X-RapidAPI-Host': 'youtube-mp36.p.rapidapi.com'
-      }
+        "X-RapidAPI-Key": "d725180af2msh18ae9c7e95ddfb3p16aeb9jsn57cd19dd8cd1",
+        "X-RapidAPI-Host": "youtube-mp36.p.rapidapi.com",
+      },
     };
-    
+
     try {
       const response = await fetch(Yurl, options);
       const result = await response.json();
       console.log(result);
-      
+
       console.log(result.link);
-      url= result.link;
-      status = result.status
+      tempurl = result.link;
+      status = result.status;
     } catch (error) {
       console.error(error);
     }
-   if(status==="ok"){
-    const response = await fetch(`${host}/api/audio/addaudio`, {
-      method: "POST", // *GET, POST, PUT, DELETE, etc.
+    if (status === "ok") {
+      const data = await fetch(tempurl);
+      const json = await data.blob();
+      console.log(json);
+      let url;
+      var d = new Date();
+      var file = new File(
+        [json],
+        d.valueOf(),
+        { type: "audio/mpeg" }
+      );
 
-      headers: {
-        "Content-Type": "application/json",
+      console.log("file: ", file);
+      console.log("time: ", d.getSeconds());
+      const storage = getStorage();
 
-        "auth-token": localStorage.getItem("token"),
-      },
+      const storageRef = ref(
+        storage,
+        `${description}`.concat(`${d.getTime()}`)
+      );
 
-      body: JSON.stringify({ url, description }),
-    });
-    const Json = await response.json();
-    console.log("Json: ",Json);
-    console.log(Json.url);
-    setAudios(audios.concat(Json));
-  }
-  else{
-    console.log("try again");
-  }
-  }
+      // 'file' comes from the Blob or File API
+      const temp = await uploadBytes(storageRef, file).then((snapshot) => {
+        console.log("Uploaded a blob or file!");
+      });
+      const anotherTenp = await getDownloadURL(storageRef)
+        .then((curl) => {
+       
+          const xhr = new XMLHttpRequest();
+          xhr.responseType = "blob";
+          xhr.onload = (event) => {
+            const blob = xhr.response;
+          };
+          xhr.open("GET", curl);
+          xhr.send();
+
+          // Or inserted into an <img> element
+          console.log("url:", curl);
+          url = curl;
+        })
+        .catch((error) => {
+          // Handle any errors
+        });
+      const response = await fetch(`${host}/api/audio/addaudio`, {
+        method: "POST", // *GET, POST, PUT, DELETE, etc.
+
+        headers: {
+          "Content-Type": "application/json",
+
+          "auth-token": localStorage.getItem("token"),
+        },
+
+        body: JSON.stringify({ url, description }),
+      });
+      const Json = await response.json();
+      console.log("Json: ",Json);
+      console.log(Json.url);
+      setAudios(audios.concat(Json));
+    } else {
+      console.log("try again");
+    }
+  };
   const addAudio = async (video, description, tag) => {
     ffmpeg.FS("writeFile", "video1.mp4", await fetchFile(video));
     await ffmpeg.run(
@@ -127,18 +168,17 @@ const AudioStates = (props) => {
       { type: "audio/mpeg" }
     );
 
-    console.log("file: ",file);
+    console.log("file: ", file);
     console.log("time: ", d.getSeconds());
     const storage = getStorage();
- 
-  
+
     const storageRef = ref(storage, `${description}`.concat(`${d.getTime()}`));
-   
+
     // 'file' comes from the Blob or File API
     const temp = await uploadBytes(storageRef, file).then((snapshot) => {
       console.log("Uploaded a blob or file!");
     });
-    const anotherTenp= await getDownloadURL(storageRef)
+    const anotherTenp = await getDownloadURL(storageRef)
       .then((curl) => {
         // `url` is the download URL for 'images/stars.jpg'
 
@@ -158,7 +198,6 @@ const AudioStates = (props) => {
       .catch((error) => {
         // Handle any errors
       });
-   
 
     const response = await fetch(`${host}/api/audio/addaudio`, {
       method: "POST", // *GET, POST, PUT, DELETE, etc.
@@ -172,12 +211,49 @@ const AudioStates = (props) => {
       body: JSON.stringify({ url, description, tag }),
     });
     const Json = await response.json();
-    console.log("Json: ",Json);
+    console.log("Json: ", Json);
     console.log(Json.url);
     setAudios(audios.concat(Json));
   };
+  const updateAudio = async (id, description) => {
+    console.log("id: ", id);
+    const response = await fetch(`${host}/api/audio/updateaudio/${id}`, {
+      method: "PUT",
+
+      headers: {
+        "Content-Type": "application/json",
+        "auth-token": localStorage.getItem("token"),
+      },
+      body: JSON.stringify({description}),
+    });
+
+   let newAudio= [...audios];
+    const Json = await response.json();
+    console.log("Json: ", Json);
+    console.log(Json.url);
+    for(let i=0; i< newAudio.length; i++){
+    if(newAudio[i]._id===id){
+      newAudio[i].description= description;
+    }
+    }
+ 
+    setAudios(newAudio);
+    // let newAudio = audios.filter((audio) => {
+    //   console.log(audio._id);
+    //   console.log(id);
+    //   return audio._id !== id;
+    // });
+    // console.log(newAudio);
+    // newAudio=newAudio.concat(Json);
+    // console.log(newAudio);
+    // setAudios(newAudio);
+    
+    
+    // setAudios(audios.concat(Json));
+  };
 
   const deleteAudio = async (id) => {
+    console.log("id: ", id);
     const response = await fetch(`${host}/api/audio/deleteaudio/${id}`, {
       method: "DELETE",
 
@@ -195,7 +271,16 @@ const AudioStates = (props) => {
 
   return (
     <audioContext.Provider
-      value={{ audios, setVideo, video, addAudio, addAudioByUrl,  fetchAllAudio, deleteAudio }}
+      value={{
+        audios,
+        setVideo,
+        video,
+        addAudio,
+        addAudioByUrl,
+        fetchAllAudio,
+        deleteAudio,
+        updateAudio,
+      }}
     >
       {props.children}
     </audioContext.Provider>

@@ -89,48 +89,83 @@ const SignUp = (props) => {
 <div className='authCotainer'>
 
 <div className='signupCard shadow-lg d-flex flex-row'>
-<div className='pageStyle'>
+<div className='pageStyle d-none d-lg-block'>
 
     <Link id="toHome" to="/">
 
    </Link> 
    <img src={signup} alt='' className='imgSingup' />
     </div>
-        <div className='singUpCredential'>
-        <h2 style={{marginBottom:"40px"}}>Create your account
-        <hr/></h2>
+        <div className='d-none d-lg-block singUpCredential'>
+        <h2 style={{marginBottom:"40px", textAlign:"center"}}>Create your account
+        <hr style={{width:"100%"}}/></h2>
 
        <form onSubmit={submitCredential}>
    <div className="form-group">
      
     <div className='d-flex align-items-center' >
     <i className="fa-solid fa-user mx-2"></i>
-    <input style={{width:"290px"}} type="text" className="form-control my-2" name='name' value={credentials.name} id="fname" onChange={onChange} placeholder='Enter Username'/>
+    <input  type="text" className="form-control my-2" name='name' value={credentials.name} id="fname" onChange={onChange} placeholder='Enter Username'/>
     </div>
     <div className='d-flex align-items-center' >
     <i className="fa-solid fa-envelope mx-2"></i>
-    <input style={{width:"290px"}} type="email" className="form-control my-2" name='email' id="email" value={credentials.email} aria-describedby="emailHelp" onChange={onChange} placeholder="Enter email" />
+    <input  type="email" className="form-control my-2" name='email' id="email" value={credentials.email} aria-describedby="emailHelp" onChange={onChange} placeholder="Enter email" />
     </div> 
    
      <div className='d-flex align-items-center' >
      <i className="fa-solid fa-key mx-2"></i>
-     <input style={{width:"290px"}} type="password" className="form-control my-2" name='password' value={credentials.password} id="password" onChange={onChange} placeholder="Password" />
+     <input type="password" className="form-control my-2" name='password' value={credentials.password} id="password" onChange={onChange} placeholder="Password" />
      </div>
     
  
      <div className='d-flex align-items-center' >
      <i className="fa-solid fa-key mx-2"></i>
-     <input style={{width:"290px"}} type="password" className="form-control my-2" name='confirm_password' value={credentials.confirm_password} id="cpassword" onChange={onChange} placeholder="confirm Password" />
+     <input  type="password" className="form-control my-2" name='confirm_password' value={credentials.confirm_password} id="cpassword" onChange={onChange} placeholder="confirm Password" />
       </div>
      
      <p id="errmsg"></p>
    </div>
    <button type="submit" className="my-3 btn btn-dark" >Submit</button>
-   <p>already have account? <Link to="/Login" style={{textDecoration:"none"}}>Login <i class="fa-solid fa-arrow-right"></i></Link></p>
+   <p>already have account? <Link to="/Login" style={{textDecoration:"none"}}>Login <i className="fa-solid fa-arrow-right"></i></Link></p>
+ </form>
+ 
+</div>
+<div className='d-lg-none singUpCredential' >
+        <h2 style={{marginBottom:"40px", textAlign:"center"}}>Create your account
+        <hr style={{width:"100%"}}/></h2>
+
+       <form onSubmit={submitCredential}>
+   <div className="form-group">
+     
+    <div className='d-flex align-items-center' >
+    <i className="fa-solid fa-user mx-2"></i>
+    <input  type="text" className="form-control my-2" name='name' value={credentials.name} id="small_fname" onChange={onChange} placeholder='Enter Username'/>
+    </div>
+    <div className='d-flex align-items-center' >
+    <i className="fa-solid fa-envelope mx-2"></i>
+    <input  type="email" className="form-control my-2" name='email' id="small_email" value={credentials.email} aria-describedby="emailHelp" onChange={onChange} placeholder="Enter email" />
+    </div> 
+   
+     <div className='d-flex align-items-center' >
+     <i className="fa-solid fa-key mx-2"></i>
+     <input type="password" className="form-control my-2" name='password' value={credentials.password} id="small_password" onChange={onChange} placeholder="Password" />
+     </div>
+    
+ 
+     <div className='d-flex align-items-center' >
+     <i className="fa-solid fa-key mx-2"></i>
+     <input  type="password" className="form-control my-2" name='confirm_password' value={credentials.confirm_password} id="small_cpassword" onChange={onChange} placeholder="confirm Password" />
+      </div>
+     
+     <p id="errmsg"></p>
+   </div>
+   <button type="submit" className="my-3 btn btn-dark" >Submit</button>
+   <p>already have account? <Link to="/Login" style={{textDecoration:"none"}}>Login <i className="fa-solid fa-arrow-right"></i></Link></p>
  </form>
  
 </div>
 </div>
+
 </div>
 
   )

@@ -5,7 +5,7 @@ async function connectToMongo(err) {
   if (err) {
     console.log(err);
   } else {
-    console.log("ho gya connect");
+    console.log("connected to mongoDB");
     await mongoose.connect(mongoURI);
   }
 

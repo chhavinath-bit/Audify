@@ -12,12 +12,12 @@ const AddAudio = () => {
         alert("please provide a valid description");
         return 
       }
-      if(videoUrl!==""){
-       addAudioByUrl(videoUrl,audio.description);
-       setVideoUrl("");
-       setAudio({ description:" ", tag:"default"})
-       return;
-      }
+      // if(videoUrl!==""){
+      //  addAudioByUrl(videoUrl,audio.description);
+      //  setVideoUrl("");
+      //  setAudio({ description:" ", tag:"default"})
+      //  return;
+      // }
       if(video===undefined ){
         alert("please select a file or give url id")
           return 
@@ -39,23 +39,34 @@ const AddAudio = () => {
      setVideoUrl(e.target.value);
    }
   return (
-    <div className='p-4' >
+    <>
+      <div className='p-4 col-12 col-md-6 ' >
     <form>
-    <div className="form-group">
+    <div className="form-group" >
       {/* <label htmlFor="title">Email address</label> */}
-      <input onChange={onChangeUrl} type="text" className="form-control my-3" name="url" value={videoUrl} placeholder='put the id of youtube video'></input>
-     <div className='d-flex flex-row align-items-center'> <hr style={{width:"47vw"}} /> <span className='mx-1'>Or</span><hr style={{width:"47vw"}} /></div>
-      <input onChange={onChangeFile} type="file" className="form-control my-3" id="video" name="video" aria-describedby="emailHelp" placeholder="Enter email" />
+      {/* <input onChange={onChangeUrl} type="text" className="form-control my-3" name="url" value={videoUrl} placeholder='put the id of youtube video'></input> */}
+     {/* <div className='d-flex flex-row align-items-center'> <hr style={{width:"47vw"}} /> <span className='mx-1'>Or</span><hr style={{width:"47vw"}} /></div> */}
+      <input style={{borderRadius:"10px"}} onChange={onChangeFile} type="file" className="form-control my-3" id="video" name="video"  placeholder="Enter file" />
       
     </div>
-    <div className="form-group">
-      <label htmlFor="description">Description</label>
-      <input onChange={onChange} value={audio.description} type="text" className="form-control my-3" id="description" name='description' />
+    <div className="form-group d-md-none">
+      {/* <label htmlFor="description">Description</label> */}
+      <input style={{borderRadius:"10px"}}  onChange={onChange} value={audio.description} type="text" className="form-control my-3" id="description" name='description'  placeholder='Description' />  
     </div>
    
-    <button type="submit" className="btn btn-dark" onClick={addAudioByinput}>Convert</button>
+    <button  type="submit" className="btn btn-dark btn-custom" onClick={addAudioByinput}>Convert</button>
   </form> 
   </div>
+    <div className='p-4 d-none d-md-block col-md-6' >
+    <form>
+    <div className="form-group">
+      {/* <label htmlFor="description">Description</label> */}
+      <input style={{borderRadius:"10px"}}  onChange={onChange} value={audio.description} type="text" className="form-control my-3" id="description" name='description'  placeholder='Description' />  
+    </div>
+   
+  </form> 
+  </div>
+  </>
   )
 }
 
