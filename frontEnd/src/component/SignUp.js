@@ -1,4 +1,4 @@
-import React, {useState} from 'react'
+import React, {useState, useEffect} from 'react'
 import { Link } from 'react-router-dom';
 import signup from '../signup.jpg'
 const SignUp = (props) => {
@@ -10,27 +10,41 @@ const SignUp = (props) => {
         if(credentials.name.length===0){
           document.getElementById("errmsg").style.color="red";
           document.getElementById("errmsg").textContent="Name should not be empty";
+          document.getElementById("errmsgSm").style.color="red";
+          document.getElementById("errmsgSm").textContent="Name should not be empty";
           setTimeout(()=>{
             document.getElementById("errmsg").style.color="black";
-            document.getElementById("errmsg").textContent="";}, 3000)
+            document.getElementById("errmsg").textContent="";
+            document.getElementById("errmsgSm").style.color="black";
+            document.getElementById("errmsgSm").textContent="";
+          }, 3000)
+            
               return;
           
         }
         if(credentials.email.length===0){
           document.getElementById("errmsg").style.color="red";
           document.getElementById("errmsg").textContent="E-mail should not be empty";
+          document.getElementById("errmsgSm").style.color="red";
+          document.getElementById("errmsgSm").textContent="E-mail should not be empty";
           setTimeout(()=>{
             document.getElementById("errmsg").style.color="black";
-            document.getElementById("errmsg").textContent="";}, 3000)
+            document.getElementById("errmsg").textContent="";
+            document.getElementById("errmsgSm").style.color="black";
+            document.getElementById("errmsgSm").textContent="";}, 3000)
               return;
           
         }
         if(credentials.password!==credentials.confirm_password || credentials.password.length===0){
           document.getElementById("errmsg").style.color="red";
             document.getElementById("errmsg").textContent="confirm password must be same as password";
+            document.getElementById("errmsgSm").style.color="red";
+            document.getElementById("errmsgSm").textContent="confirm password must be same as password";
             setTimeout(()=>{
           document.getElementById("errmsg").style.color="black";
-          document.getElementById("errmsg").textContent="";}, 3000)
+          document.getElementById("errmsg").textContent="";
+          document.getElementById("errmsgSm").style.color="black";
+          document.getElementById("errmsgSm").textContent="";}, 3000)
             return;
         }
         const {name, email, password} = credentials;
@@ -57,24 +71,33 @@ const SignUp = (props) => {
             console.log(json);
             if(json.errors==="User with email already exist"){
                 document.getElementById("errmsg").textContent="Email is already exist try to login with email";
+                document.getElementById("errmsgSm").textContent="Email is already exist try to login with email";
                 setTimeout(()=>{
                   document.getElementById("errmsg").style.color="black";
-                  document.getElementById("errmsg").textContent="";}, 3000)
+                  document.getElementById("errmsg").textContent="";
+                  document.getElementById("errmsgSm").style.color="black";
+                  document.getElementById("errmsgSm").textContent="";}, 3000)
                     return;
                 
             }
             else if(json.errors==="Internal Server Error"){
                 document.getElementById("errmsg").textContent="Internal Server Error";
+                document.getElementById("errmsgSm").textContent="Internal Server Error";
                 setTimeout(()=>{
                   document.getElementById("errmsg").style.color="black";
-                  document.getElementById("errmsg").textContent="";}, 3000)
+                  document.getElementById("errmsg").textContent="";
+                  document.getElementById("errmsgSm").style.color="black";
+                  document.getElementById("errmsgSm").textContent="";}, 3000)
                     return;
                 }
             else{
               document.getElementById("errmsg").textContent=json.errors[0].msg +" of "+json.errors[0].path;
+              document.getElementById("errmsgSm").textContent=json.errors[0].msg +" of "+json.errors[0].path;
               setTimeout(()=>{
                 document.getElementById("errmsg").style.color="black";
-                document.getElementById("errmsg").textContent="";}, 3000)
+                document.getElementById("errmsg").textContent="";
+                document.getElementById("errmsgSm").style.color="black";
+                document.getElementById("errmsgSm").textContent="";}, 3000)
                   return;
               }
           }
@@ -85,6 +108,11 @@ const SignUp = (props) => {
         console.log(credentials.name, credentials.email, credentials.password, credentials.confirm_password);
        
     }
+    useEffect(()=>{
+      if(localStorage.getItem("name")!==null && localStorage.getItem("token")!==null){
+       document.getElementById("toHome").click();
+      }
+     },[]);        
   return (
 <div className='authCotainer'>
 
@@ -157,7 +185,7 @@ const SignUp = (props) => {
      <input  type="password" className="form-control my-2" name='confirm_password' value={credentials.confirm_password} id="small_cpassword" onChange={onChange} placeholder="confirm Password" />
       </div>
      
-     <p id="errmsg"></p>
+     <p id="errmsgSm"></p>
    </div>
    <button type="submit" className="my-3 btn btn-dark" >Submit</button>
    <p>already have account? <Link to="/Login" style={{textDecoration:"none"}}>Login <i className="fa-solid fa-arrow-right"></i></Link></p>

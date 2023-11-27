@@ -1,6 +1,6 @@
 import React, {useContext, useState} from 'react'
 import audioContext from '../context/audio/audioContext'
-const AddAudio = () => {
+const AddAudio = (props) => {
     const context= useContext(audioContext)
     const {addAudio, setVideo, video, addAudioByUrl}= context;
    const [videoUrl, setVideoUrl]= useState("");
@@ -25,7 +25,9 @@ const AddAudio = () => {
      
     
      addAudio(video, audio.description, audio.tag);
-     setAudio({ description:" ", tag:"default"})
+     props.showAlert("Successfully converted", "success")
+     setAudio({ description:" ", tag:"default"});
+
      document.getElementById("video").value="";
     }
    const onChange=(e)=>{

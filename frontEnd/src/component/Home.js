@@ -2,13 +2,13 @@ import React from 'react'
 import Audio from './Audio'
 import AddAudio from './AddAudio'
 
-const Home = () => {
+const Home = (props) => {
     
   return (
     <div className='container-fluid Page' style={{color:"white" }}>
     <div className='row'>
-    <AddAudio/>
-   <Audio/>
+    <AddAudio showAlert={props.showAlert}/>
+   <Audio showAlert={props.showAlert}/>
     </div>
    
     </div>

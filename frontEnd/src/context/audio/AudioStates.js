@@ -12,7 +12,7 @@ const AudioStates = (props) => {
   const [audios, setAudios] = useState(audioIntially);
   const [ready, setReady] = useState(false);
   const [video, setVideo] = useState();
-
+  const [isConverting, setIsConverting]= useState(false);
   const load = async () => {
     await ffmpeg.load();
     setReady(true);
@@ -42,6 +42,8 @@ const AudioStates = (props) => {
   //   return cityList;
   // }
   const fetchAllAudio = async () => {
+    setIsConverting(true)
+    console.log(isConverting)
     const response = await fetch(`${host}/api/audio/fetchallaudio`, {
       method: "GET",
 
@@ -52,12 +54,15 @@ const AudioStates = (props) => {
       },
     });
     const Json = await response.json();
+    setIsConverting(false);
+    console.log(isConverting)
     setAudios(Json);
   };
   const addAudioByUrl = async (videoUrl, description) => {
     console.log(videoUrl);
     let status;
     let tempurl;
+    
     const Yurl = `https://youtube-mp36.p.rapidapi.com/dl?id=${videoUrl}`;
     const options = {
       method: "GET",
@@ -141,6 +146,7 @@ const AudioStates = (props) => {
     }
   };
   const addAudio = async (video, description, tag) => {
+    setIsConverting(true)
     ffmpeg.FS("writeFile", "video1.mp4", await fetchFile(video));
     await ffmpeg.run(
       "-y",
@@ -213,6 +219,7 @@ const AudioStates = (props) => {
     const Json = await response.json();
     console.log("Json: ", Json);
     console.log(Json.url);
+    setIsConverting(false);
     setAudios(audios.concat(Json));
   };
   const updateAudio = async (id, description) => {

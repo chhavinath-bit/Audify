@@ -1,6 +1,6 @@
 import React, { useContext, useState, useEffect } from "react";
 import audioContext from "../context/audio/audioContext";
-
+import loading from "../loading_audio.gif"
 const AudioItem = (props) => {
   const [url, setUrl] = useState("");
   const [isloading, setIsloading] = useState(false);
@@ -55,6 +55,9 @@ const AudioItem = (props) => {
           <audio controls>
             <source src={url} type="audio/mpeg" />
           </audio>
+        )}
+        {isloading && (
+          <img src={loading} style={{width:"10vw"}} alt=""/>
         )}
 
         {console.log("url in audioItem", ele.url)}
