@@ -18,7 +18,6 @@ const Audio = () => {
     <span className='buttonAudio'>Hey {localStorage.getItem("name")}</span>
     <hr/>
     <p style={{fontSize:"22px"}}>Here are your converted audios</p>
-    {/* <div className='w-100'><img style={{width:"250px", marginLeft:"auto"}} src={loading} alt=""></img></div> */}
     {isConverting && (<div className="w-100" style={{ textAlign : 'center'}}> <img style={{width:"35vw"}} src={loading} alt="" /></div>)}
     {audios.map((ele)=>{
         return <AudioItem key={ele._id} ele={ele} />

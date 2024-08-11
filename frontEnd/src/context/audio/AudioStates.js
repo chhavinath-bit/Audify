@@ -4,8 +4,9 @@ import { initializeApp } from "firebase/app";
 
 import { getFirestore, collection, getDocs } from "firebase/firestore/lite";
 import { getStorage, ref, uploadBytes, getDownloadURL } from "firebase/storage";
-import { createFFmpeg, fetchFile } from "@ffmpeg/ffmpeg";
-const ffmpeg = createFFmpeg({ log: true });
+import { FFmpeg } from '@ffmpeg/ffmpeg'
+import { fetchFile } from '@ffmpeg/util'
+const ffmpeg = new FFmpeg();
 const AudioStates = (props) => {
   const host = "http://localhost:5000";
   const audioIntially = [];
@@ -58,113 +59,24 @@ const AudioStates = (props) => {
     console.log(isConverting)
     setAudios(Json);
   };
-  const addAudioByUrl = async (videoUrl, description) => {
-    console.log(videoUrl);
-    let status;
-    let tempurl;
-    
-    const Yurl = `https://youtube-mp36.p.rapidapi.com/dl?id=${videoUrl}`;
-    const options = {
-      method: "GET",
-      headers: {
-        "X-RapidAPI-Key": "d725180af2msh18ae9c7e95ddfb3p16aeb9jsn57cd19dd8cd1",
-        "X-RapidAPI-Host": "youtube-mp36.p.rapidapi.com",
-      },
-    };
-
-    try {
-      const response = await fetch(Yurl, options);
-      const result = await response.json();
-      console.log(result);
-
-      console.log(result.link);
-      tempurl = result.link;
-      status = result.status;
-    } catch (error) {
-      console.error(error);
-    }
-    if (status === "ok") {
-      const data = await fetch(tempurl);
-      const json = await data.blob();
-      console.log(json);
-      let url;
-      var d = new Date();
-      var file = new File(
-        [json],
-        d.valueOf(),
-        { type: "audio/mpeg" }
-      );
-
-      console.log("file: ", file);
-      console.log("time: ", d.getSeconds());
-      const storage = getStorage();
-
-      const storageRef = ref(
-        storage,
-        `${description}`.concat(`${d.getTime()}`)
-      );
-
-      // 'file' comes from the Blob or File API
-      const temp = await uploadBytes(storageRef, file).then((snapshot) => {
-        console.log("Uploaded a blob or file!");
-      });
-      const anotherTenp = await getDownloadURL(storageRef)
-        .then((curl) => {
-       
-          const xhr = new XMLHttpRequest();
-          xhr.responseType = "blob";
-          xhr.onload = (event) => {
-            const blob = xhr.response;
-          };
-          xhr.open("GET", curl);
-          xhr.send();
-
-          // Or inserted into an <img> element
-          console.log("url:", curl);
-          url = curl;
-        })
-        .catch((error) => {
-          // Handle any errors
-        });
-      const response = await fetch(`${host}/api/audio/addaudio`, {
-        method: "POST", // *GET, POST, PUT, DELETE, etc.
-
-        headers: {
-          "Content-Type": "application/json",
-
-          "auth-token": localStorage.getItem("token"),
-        },
-
-        body: JSON.stringify({ url, description }),
-      });
-      const Json = await response.json();
-      console.log("Json: ",Json);
-      console.log(Json.url);
-      setAudios(audios.concat(Json));
-    } else {
-      console.log("try again");
-    }
-  };
+  
   const addAudio = async (video, description, tag) => {
+    await ffmpeg.load();
     setIsConverting(true)
-    ffmpeg.FS("writeFile", "video1.mp4", await fetchFile(video));
-    await ffmpeg.run(
+    await ffmpeg.writeFile("video1.mp4", await fetchFile(video));
+    await ffmpeg.exec([
       "-y",
-      "-i",
-      "video1.mp4",
+      "-i", "video1.mp4",
       "-vn",
-      "-ar",
-      "44100",
-      "-ac",
-      "2",
-      "-b:a",
-      "256k",
-      "-f",
-      "mp3",
+      "-ar", "44100",
+      "-ac", "2",
+      "-b:a", "256k",
+      "-f", "mp3",
       "out.mp3"
-    );
+    ]);
+    
     // Read the .gif file back from the FFmpeg file system
-    const data = ffmpeg.FS("readFile", "out.mp3");
+    const data = await ffmpeg.readFile('out.mp3');
     console.log("audios data", data);
     let url;
     var d = new Date();
@@ -283,7 +195,7 @@ const AudioStates = (props) => {
         setVideo,
         video,
         addAudio,
-        addAudioByUrl,
+        
         fetchAllAudio,
         deleteAudio,
         updateAudio,

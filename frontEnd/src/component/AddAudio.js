@@ -18,7 +18,7 @@ const AddAudio = (props) => {
       //  setAudio({ description:" ", tag:"default"})
       //  return;
       // }
-      if(video===undefined ){
+      if(video===undefined){
         alert("please select a file or give url id")
           return 
       }
